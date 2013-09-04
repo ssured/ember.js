@@ -997,6 +997,8 @@ test("max is observable", function() {
   });
 
   equal(observerFired, true, "observer fires when current max is removed");
+
+  // obj.removeObserver('max');
 });
 
 module('Ember.computed.min', {
