@@ -978,6 +978,27 @@ test("max recomputes when the current max is removed", function() {
   equal(get(obj, 'max'), 1, "max is recomputed when the current max is removed");
 });
 
+test("max is observable", function() {
+  var observerFired = false;
+
+  obj.addObserver('max', function(){
+    observerFired = true;
+  });
+
+  Ember.run(function() {
+    items = get(obj, 'items');
+    items.removeObject(2);
+  });
+
+  equal(observerFired, false, "max is unchanged, observer did not fire");
+
+  Ember.run(function() {
+    items.removeObject(3);
+  });
+
+  equal(observerFired, true, "observer fires when current max is removed");
+});
+
 module('Ember.computed.min', {
   setup: function() {
     Ember.run(function() {
